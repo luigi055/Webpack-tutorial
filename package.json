@@ -5,10 +5,14 @@
   "author": "Pedro La Rosa",
   "license": "MIT",
   "scripts": {
-    "start": "webpack --mode production",
-    "dev": "webpack --mode development"
+    "start": "webpack --mode production && node server.js",
+    "dev": "webpack --mode development && nodemon server.js",
+    "dev:watch": "webpack --mode development -w",
+    "server": "nodemon server.js"
   },
   "devDependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.17.5",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8"
   }

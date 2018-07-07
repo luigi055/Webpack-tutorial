@@ -1,3 +1,3 @@
-const bundler = "webpack dependencie 1";
+const subTitle = document.getElementById("subTitle");
 
-module.exports = bundler;
+module.exports = subTitle;

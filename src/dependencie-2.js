@@ -1,3 +1,3 @@
-const bundler = "webpack dependencie 2";
+const title = document.getElementById("title");
 
-module.exports = bundler;
+module.exports = title;
