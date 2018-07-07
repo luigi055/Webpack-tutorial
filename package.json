@@ -1,0 +1,15 @@
+{
+  "name": "webpack-tuto",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Pedro La Rosa",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack --mode production",
+    "dev": "webpack --mode development"
+  },
+  "devDependencies": {
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8"
+  }
+}
