@@ -1,5 +1,7 @@
-const title = require("./dependencie-2");
-const subTitle = require("./dependencie-1");
+import title from "./dependencie-2";
+import subTitle from "./dependencie-1";
+
+import "./styles/index.css";
 
 subTitle.style.color = "#06a";
 title.style.color = "#f00";

@@ -140,3 +140,137 @@ now the route will be http//localhost:3000/bundle.js (same but static) and acces
 with watch mode you can make webpack to listen changes in your code and process it in real time.
 and combine this with your server you don't have to execute the script everytime you need to run webpack
 in your localhost just refresh the browser and see? like old school development :)!
+
+# v1.3 loaders Part 1 (git checkout v1.1-core-concepts)
+
+Loaders are piece of configuration setting that allow us to process chunk of code syntax and translate to one the browser could understand.
+
+for example CSS preprocessors or Javascript compilers.
+
+At a high level, loaders have two properties in your webpack configuration:
+
+The test property identifies which file or files should be transformed.
+The use property indicates which loader should be used to do the transforming.
+
+Let's start including one of the most essential loaders we use in modern frontend development
+
+Babel which is a toolchain that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript in old browsers or environments.
+
+[Futher Reading](https://babeljs.io/docs/en/index.html)
+
+first of all let's install dependencies that we need to run babel propertly
+
+```
+yarn add --dev babel-loader babel-core babel-preset-env
+```
+
+in order to add the loaders we are adding a new property to our config object: module and inside a rules array which will contain all of test (file extensions) and rules (loaders) we want to use to process our files
+
+```
+{
+  module: {
+    rules [
+
+    ]
+  }
+}
+```
+
+and now. inside rules let's add our first loader; Babel-Loader
+
+```
+  {
+    test: /\.js$/,
+    exclude: /(node_modules|bower_components)/,
+    use: {
+      loader: "babel-loader"
+    }
+  }
+```
+
+Yes, it is really this easy...
+
+now webpack process our javascript files since _test_ property expect or a string with a file extension or an Regular Expression.
+then we exclude all of folders and files we don't want babel process. in this case node_modules or bower_components.
+Finally we use babel loader.
+
+but some important thing is still missing. We need to configure babel with its presets and plugins.
+
+There are many ways to declare this. we can even declare this confi here in the loader section as options. but this will make our webpack config longer and we can divide this in a different file to configure babel.
+
+in our root folder add
+
+.babelrc
+
+and now following the documentation of babel we can make all the configuration we think we're going to need for our project
+
+```
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": "last 2 versions"
+        },
+        "modules": false,
+        "loose": true
+      }
+    ]
+  ]
+}
+```
+
+this says use the env plugin to use the latest features of Javascript available and which will be compatible with at least the last 2 versions of browsers.
+
+[Read more about .babelrc here.](https://babeljs.io/docs/en/babelrc)
+
+and now. we're done.
+
+Adding a loader it's really this easy. and now let's follow with another common set of loaders related to styles.
+
+## CSS in Webpack
+
+this is key. process your styles is fundamental of any website
+
+let's install the loaders we're going to need for this part:
+
+```
+yarn add --dev style-loader css-loader
+```
+
+### Loader chaininng
+
+the use property can expect either a single object with a loader or an array of object loaders
+in this case to process css correctly we'll need 2 loaders; style-loader and css-loader
+
+we have to include both in order of priority
+
+```
+  {
+    test: /\.css$/,
+    exclude: /(node_modules|bower_components)/,
+    use: [
+      {
+        loader: "style-loader"
+      },
+      {
+        loader: "css-loader"
+      }
+    ]
+  }
+```
+
+then in src folder create a new folder call "styles" you can call it how you want and also you can put youe css files wherever you want inside the entry context (src) the important thing here is that you have to import it to the app.js (the entry point file).
+
+app.js
+
+```
+import "./styles/index.css";
+```
+
+notice that more css files you'll need to make more import, this will solve soon when we add SASS loader and have Sass an scss files support in our project.
+
+and that is.
+
+run your build and server script and see the results in localhost:3000/
