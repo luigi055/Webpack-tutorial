@@ -141,7 +141,7 @@ with watch mode you can make webpack to listen changes in your code and process 
 and combine this with your server you don't have to execute the script everytime you need to run webpack
 in your localhost just refresh the browser and see? like old school development :)!
 
-# v1.3 loaders Part 1 (git checkout v1.1-core-concepts)
+# v1.3 loaders Part 1 (git checkout v1.3-loaders-part-1)
 
 Loaders are piece of configuration setting that allow us to process chunk of code syntax and translate to one the browser could understand.
 
