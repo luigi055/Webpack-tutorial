@@ -276,3 +276,122 @@ and that is.
 run your build and server script and see the results in localhost:3000/
 
 # v1.4 loaders Part 2 (git checkout v1.4-loaders-part-2)
+
+Let's continue with some handy loaders related to font, images and static files.
+We need our webpack configuration knows how to interprete these files so we can use them in our project
+
+so we'll need some packages
+
+```
+yarn add --dev url-loader file-loader resolve-url-loader image-webpack-loader
+```
+
+first let's give our css rules the hability to map our images from src to public folder so we can use it in our styles.
+
+for this task will add a new loader to the css rule loader chain; resolve-url-loader
+
+also we need to set the file-loader so webpack know this.jpeg file extension we're going to use as example.
+
+in the css rule:
+
+```
+  {
+    test: /\.css$/,
+    exclude: /(node_modules|bower_components)/,
+    use: [
+      {
+        loader: "style-loader"
+      },
+      {
+        loader: "css-loader"
+      },
+      {
+        loader: "resolve-url-loader",
+        options: {
+          sourceMap: true
+        }
+      }
+    ]
+  }
+```
+
+and then let's add a new rule for file loader
+
+## File Loader:
+
+image-webpack-loader is a great tool. which allow you optimize your images immediatly while building process so you don't need to process your images with an outside provider. webpack can do it by its own :)!
+
+notice in the file-loader as paremeters you can assign the output folder and you can write the expected exit name and file extension for the file. in this case this will create a new folder en public whose name is assets/images and inside of it will be all our images and from here will be liked to our css thanks to resolve-url-loader. Neat!
+
+```
+  {
+    test: /\.(jpe?g|png|gif)$/i,
+    loaders: [
+      'file-loader?limit=1024&name=assets/images/[name].[ext]',
+      {
+        loader: 'image-webpack-loader',
+        options: {
+          mozjpeg: {
+            progressive: true,
+          },
+          gifsicle: {
+            interlaced: false,
+          },
+          optipng: {
+            optimizationLevel: 4,
+          },
+          pngquant: {
+            quality: '65-90',
+            speed: 4,
+          },
+        },
+      },
+    ],
+    exclude: /node_modules/,
+    include: __dirname,
+  },
+```
+
+### Further Reading:
+
+[file-loader](https://github.com/webpack-contrib/file-loader)
+[resolve-url-loader](https://github.com/bholloway/resolve-url-loader)
+[image-webpack-loader](https://github.com/tcoopman/image-webpack-loader)
+
+## URL-loader + File-loader and font files.
+
+We would also need support for font files. this is basic in any web development project.
+eventthought you might no need to have the direct font file within the project maybe because you use and external provider like google-fonts or fontawesome... this is also necesary when you have unique or custom font-types that aren't available in the cloud.
+
+In webpack.config.js add the following rules
+
+```
+  {
+    test: /\.otf|woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]',
+  },
+  {
+    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: 'file-loader?limit=10000&name=assets/fonts/[name].[ext]',
+  },
+```
+
+now i added a fonts folder in src with a Gaegu font type.
+
+in index.css we're going to add this font and use it in our project.
+
+```
+@font-face {
+  font-family: Gaegu;
+  src: url(../fonts/Gaegu-Regular.ttf);
+}
+
+body {
+  background: url(../img/webpack.jpeg);
+  font-family: Gaegu, cursive;
+}
+```
+
+Done!
+
+now our project have support to process images and font files apart of css files linked to its files dependencies it's going to use.

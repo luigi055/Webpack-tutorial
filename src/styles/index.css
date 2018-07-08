@@ -1,3 +1,13 @@
+@font-face {
+  font-family: Gaegu;
+  src: url(../fonts/Gaegu-Regular.ttf);
+}
+
+body {
+  background: url(../img/webpack.jpeg);
+  font-family: Gaegu, cursive;
+}
+
 .css-class {
   color: rebeccapurple;
 }
