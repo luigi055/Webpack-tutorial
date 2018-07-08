@@ -11,6 +11,7 @@
     "server": "nodemon server.js"
   },
   "devDependencies": {
+    "autoprefixer": "^8.6.5",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
@@ -18,8 +19,11 @@
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
     "image-webpack-loader": "^4.3.1",
+    "node-sass": "^4.9.2",
     "nodemon": "^1.17.5",
+    "postcss-loader": "^2.1.5",
     "resolve-url-loader": "^2.3.0",
+    "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.15.1",

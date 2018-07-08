@@ -395,3 +395,170 @@ body {
 Done!
 
 now our project have support to process images and font files apart of css files linked to its files dependencies it's going to use.
+
+# v1.5 loaders Part 3 (git checkout v1.5-loaders-part-3) Advanced Styling
+
+this is an extra module on loaders, here we're going to install and use PostCSS and Sass.
+
+Not to complicated. in the part of PostCSS we are going to set up the autoprefixer plugin.
+and then have the flexibility with the css preprocessor Sass.
+
+packages we're going to need for this module:
+
+```
+yarn add --dev sass-loader node-sass postcss-loader autoprefixer
+```
+
+First let's setup postcss:
+
+in the config file add a new loader in the css rule chain.
+in this case postcss should be placed just after css-loader in order to already have the files linked thanks to resolve-url-loader.
+
+```
+  {
+    test: /\.css$/,
+    exclude: /(node_modules|bower_components)/,
+    use: [
+      {
+        loader: "style-loader"
+      },
+      {
+        loader: "css-loader"
+      },
+      {
+        loader: "postcss-loader",
+        options: {
+          sourceMap: true
+        }
+      },
+      {
+        loader: "resolve-url-loader",
+        options: {
+          sourceMap: true
+        }
+      }
+    ]
+  },
+```
+
+now, reading the postcss documentation you'll figure it out that you need a postcss config file
+
+in root folder add postcss.config.js:
+And set autoprefixer:
+
+```
+const autoprefixer = require("autoprefixer");
+
+module.exports = {
+  plugins: [
+    autoprefixer({
+      browsers: ["last 2 versions", "ie >= 9", "and_chr >= 2.3"]
+    })
+  ]
+};
+```
+
+and now we have the autoprefixer available in our project together with postcss so. we can also include some neat plugins which can help us with some sort of issues.
+
+[Here is a website with a lot of plugins for postcss](https://www.postcss.parts/)
+
+### Other Plugins
+
+theres is some other basics plugins installed and working in this boilerplate
+visit postcss.config.js to know more.
+
+#### PixRem
+
+Pixrem is a CSS post-processor that, given CSS and a root em value, returns CSS with pixel unit fallbacks or replacements. It's based on browser data so only needed fallbacks will be added. Basically, it's for IE8 or less, and for IE9 & IE10 in the font shorthand property and in pseudo-elements.
+
+#### will-change
+
+This plugin uses backface-visibility to force the browser to create a new layer, without overriding existing backface-visibility properties. This 3D CSS hack is commonly done with transform: translateZ(0), but backface-visibility is used here to avoid overriding the more popular transform property.
+
+These hacks are required for browsers that do not support will-change
+
+#### mqpacker
+
+MQPacker optimizes your media queries into single rules when possible:
+
+Pre-processors such as Sass make it easy to use media queries within a declaration,
+To reduce file sizes and (possibly) improve parsing times, MQPacker packs multiple declarations into one @media rule
+
+**Hot tip**: ensure the first media query declaration in your code defines all possible options in the order you want them even if there’s no actual difference. This guarantees MQPacker will define rules in the correct order.
+
+[mqoacket source](https://www.sitepoint.com/7-postcss-plugins-to-ease-you-into-postcss/)
+
+#### CSS Nano Plugin
+
+cssnano compacts your CSS file to ensure the download is as small as possible in your production environment. Install it via:
+
+```
+$yarn add --dev cssnano
+```
+
+The plugin works by removing comments, whitespace, duplicate rules, outdated vendor prefixes and making other optimizations to typically save at least 50%. There are alternative options but cssnano is one of the best. Use it!
+
+[Learn More](http://cssnano.co/)
+
+#### Uncss Plugin
+
+UnCSS is a tool that removes unused CSS from your stylesheets. It works across multiple files and supports Javascript-injected CSS.
+
+```
+$yarn add --dev uncss
+```
+
+[You can test this feature here](https://uncss-online.com/)
+
+[Learn More](UnCSS is a tool that removes unused CSS from your stylesheets. It works across multiple files and supports Javascript-injected CSS.)
+
+## Sass Loader
+
+now let's change the rule RegExp to be able to recognize either css or scss just add a optional pattern before css
+
+/.s?css$/
+
+and now add the sass-loader at the end of the loaders chain in use property.
+
+sass and file extension scss will be processes by webpack and node-sass and it's available to use it in our project.
+
+in src inside styles let's change the index.css to index.scss and now we're going to split the content in 2 partials. \_background.scss and \_color-class.scss and import them using sass syntax within index.scss
+
+\_background.scss:
+
+```
+@font-face {
+  font-family: Gaegu;
+  src: url(../fonts/Gaegu-Regular.ttf);
+}
+
+body {
+  background: url(../img/webpack.jpeg);
+  font-family: Gaegu, cursive;
+}
+```
+
+\_color-class.scss:
+
+```
+.css-class {
+  color: rebeccapurple;
+}
+```
+
+index.scss:
+
+```
+@import "background";
+@import "color-class";
+```
+
+and in app.js change the extension of index.css to index.scss.
+
+app.js:
+
+```
+import "./styles/index.scss";
+```
+
+to complete the module. make your build and execute the server script and see the changes ;)

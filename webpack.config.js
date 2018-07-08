@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         exclude: /(node_modules|bower_components)/,
         use: [
           {
@@ -28,7 +28,19 @@ module.exports = {
             loader: "css-loader"
           },
           {
+            loader: "postcss-loader",
+            options: {
+              sourceMap: true
+            }
+          },
+          {
             loader: "resolve-url-loader",
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: "sass-loader",
             options: {
               sourceMap: true
             }

@@ -86,14 +86,14 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "../node_modules/css-loader/index.js!../node_modules/resolve-url-loader/index.js?!./styles/index.css":
-/*!**************************************************************************************************!*\
-  !*** ../node_modules/css-loader!../node_modules/resolve-url-loader??ref--5-2!./styles/index.css ***!
-  \**************************************************************************************************/
+/***/ "../node_modules/css-loader/index.js!../node_modules/postcss-loader/lib/index.js?!../node_modules/resolve-url-loader/index.js?!../node_modules/sass-loader/lib/loader.js?!./styles/index.scss":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/css-loader!../node_modules/postcss-loader/lib??ref--5-2!../node_modules/resolve-url-loader??ref--5-3!../node_modules/sass-loader/lib/loader.js??ref--5-4!./styles/index.scss ***!
+  \****************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("var escape = __webpack_require__(/*! ../../node_modules/css-loader/lib/url/escape.js */ \"../node_modules/css-loader/lib/url/escape.js\");\nexports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ \"../node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"@font-face {\\n  font-family: Gaegu;\\n  src: url(\" + escape(__webpack_require__(/*! ../fonts/Gaegu-Regular.ttf */ \"./fonts/Gaegu-Regular.ttf\")) + \");\\n}\\n\\nbody {\\n  background: url(\" + escape(__webpack_require__(/*! ../img/webpack.jpeg */ \"./img/webpack.jpeg\")) + \");\\n  font-family: Gaegu, cursive;\\n}\\n\\n.css-class {\\n  color: rebeccapurple;\\n}\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./styles/index.css?../node_modules/css-loader!../node_modules/resolve-url-loader??ref--5-2");
+eval("var escape = __webpack_require__(/*! ../../node_modules/css-loader/lib/url/escape.js */ \"../node_modules/css-loader/lib/url/escape.js\");\nexports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ \"../node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"@font-face {\\n  font-family: Gaegu;\\n  src: url(\" + escape(__webpack_require__(/*! ./../fonts/Gaegu-Regular.ttf */ \"./fonts/Gaegu-Regular.ttf\")) + \");\\n}\\n\\nbody {\\n  background: url(\" + escape(__webpack_require__(/*! ./../img/webpack.jpeg */ \"./img/webpack.jpeg\")) + \");\\n  font-family: Gaegu, cursive;\\n}\\n\\n.css-class {\\n  color: red;\\n}\\n\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./styles/index.scss?../node_modules/css-loader!../node_modules/postcss-loader/lib??ref--5-2!../node_modules/resolve-url-loader??ref--5-3!../node_modules/sass-loader/lib/loader.js??ref--5-4");
 
 /***/ }),
 
@@ -149,7 +149,7 @@ eval("\n/**\n * When source maps are enabled, `style-loader` uses a link element
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dependencie_2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dependencie-2 */ \"./dependencie-2.js\");\n/* harmony import */ var _dependencie_2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_dependencie_2__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _dependencie_1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dependencie-1 */ \"./dependencie-1.js\");\n/* harmony import */ var _dependencie_1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_dependencie_1__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/index.css */ \"./styles/index.css\");\n/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_index_css__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n\n_dependencie_1__WEBPACK_IMPORTED_MODULE_1___default.a.style.color = \"#06a\";\n_dependencie_2__WEBPACK_IMPORTED_MODULE_0___default.a.style.color = \"#f00\";\n\nconsole.log(\"From webpack with love.\");\n\n//# sourceURL=webpack:///./app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dependencie_2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dependencie-2 */ \"./dependencie-2.js\");\n/* harmony import */ var _dependencie_2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_dependencie_2__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _dependencie_1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dependencie-1 */ \"./dependencie-1.js\");\n/* harmony import */ var _dependencie_1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_dependencie_1__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _styles_index_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/index.scss */ \"./styles/index.scss\");\n/* harmony import */ var _styles_index_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_index_scss__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n\n_dependencie_1__WEBPACK_IMPORTED_MODULE_1___default.a.style.color = \"#06a\";\n_dependencie_2__WEBPACK_IMPORTED_MODULE_0___default.a.style.color = \"#f00\";\n\nconsole.log(\"From webpack with love.\");\n\n//# sourceURL=webpack:///./app.js?");
 
 /***/ }),
 
@@ -197,14 +197,14 @@ eval("module.exports = __webpack_require__.p + \"assets/images/webpack.jpeg\";\n
 
 /***/ }),
 
-/***/ "./styles/index.css":
-/*!**************************!*\
-  !*** ./styles/index.css ***!
-  \**************************/
+/***/ "./styles/index.scss":
+/*!***************************!*\
+  !*** ./styles/index.scss ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("\nvar content = __webpack_require__(/*! !../../node_modules/css-loader!../../node_modules/resolve-url-loader??ref--5-2!./index.css */ \"../node_modules/css-loader/index.js!../node_modules/resolve-url-loader/index.js?!./styles/index.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ \"../node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./styles/index.css?");
+eval("\nvar content = __webpack_require__(/*! !../../node_modules/css-loader!../../node_modules/postcss-loader/lib??ref--5-2!../../node_modules/resolve-url-loader??ref--5-3!../../node_modules/sass-loader/lib/loader.js??ref--5-4!./index.scss */ \"../node_modules/css-loader/index.js!../node_modules/postcss-loader/lib/index.js?!../node_modules/resolve-url-loader/index.js?!../node_modules/sass-loader/lib/loader.js?!./styles/index.scss\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ \"../node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./styles/index.scss?");
 
 /***/ })
 
