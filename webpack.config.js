@@ -1,12 +1,13 @@
 const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
   entry: "./app.js",
   output: {
     path: path.resolve(__dirname, "public"),
-    filename: "bundle.js",
-    publicPath: "/"
+    filename: "bundle.js"
   },
   module: {
     rules: [
@@ -20,32 +21,32 @@ module.exports = {
       {
         test: /\.s?css$/,
         exclude: /(node_modules|bower_components)/,
-        use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              sourceMap: true
+        loader: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: "css-loader"
+            },
+            {
+              loader: "postcss-loader",
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: "resolve-url-loader",
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: "sass-loader",
+              options: {
+                sourceMap: true
+              }
             }
-          },
-          {
-            loader: "resolve-url-loader",
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
+          ]
+        })
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
@@ -81,7 +82,19 @@ module.exports = {
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "file-loader?limit=10000&name=assets/fonts/[name].[ext]"
+      },
+      {
+        test: /\.html$/,
+        loader: "html-loader"
       }
     ]
-  }
+  },
+  plugins: [
+    new HTMLWebpackPlugin({
+      title: "Home",
+      filename: `index.html`, // Output name
+      template: `index.html` // in src folder (input)
+    }),
+    new ExtractTextPlugin("style.css")
+  ]
 };
