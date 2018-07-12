@@ -703,3 +703,43 @@ here a basic template for src/index.js
 notice that the generated index.html in public already are liked to style.css and bundle.js. Neat!
 
 _WE DON'T NEED PUBLIC FOLDER ANYMORE, LET'S REMOVE IT_
+
+# v1.6.1 Plugins autodetect multiple html files (git checkout v1.6.1-plugins-autodetect-multiple-html)
+
+this is a little module that i would like to show you the power and flexibility that webpack config allow use to even generates things dinamically.
+
+in src lets create /views folder which will contain all html files related to our project
+
+before when we installed and set the html-webpack-plugin notice that every time we need to process a new html file (template) we have to add a new instance of the plugin with the options. we will simplify this making this autodetect thanks to NODE.JS **file system** and **Array.prototype.map**
+
+with file system we will detect all the files in the views folder
+
+```
+const path = require ('path');
+const fs = require ('fs');
+const webpack = require ('webpack');
+const ExtractTextPlugin = require ('extract-text-webpack-plugin');
+const HTMLWebpackPlugin = require ('html-webpack-plugin');
+
+// Get All html files from /views
+const htmlPages = fs.readdirSync (path.join (__dirname, 'src', 'views'));
+```
+
+so now we have an array of all the files inside views.
+
+since the plugins property understand array we're going to iterate htmlPages and for each file generate a new instance of html-webpack-plugin and then with **Array.prototype.concat** will add the rest of the plugins to the array.
+
+```
+  plugins: htmlPages
+    .map(
+      page =>
+        new HTMLWebpackPlugin({
+          title: "Home",
+          filename: `${page}`,
+          template: `views/${page}`
+        })
+    )
+    .concat([new ExtractTextPlugin("style.css")])
+```
+
+and that's it. now we don't need to come back to config to add any new html file we need since it now have the abbility to do it by its own.

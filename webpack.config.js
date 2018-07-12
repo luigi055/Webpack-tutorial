@@ -1,6 +1,10 @@
+const fs = require("fs");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
+
+// Get All html files from /views
+const htmlPages = fs.readdirSync(path.join(__dirname, "src", "views"));
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
@@ -89,12 +93,14 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HTMLWebpackPlugin({
-      title: "Home",
-      filename: `index.html`, // Output name
-      template: `index.html` // in src folder (input)
-    }),
-    new ExtractTextPlugin("style.css")
-  ]
+  plugins: htmlPages
+    .map(
+      page =>
+        new HTMLWebpackPlugin({
+          title: "Home",
+          filename: `${page}`,
+          template: `views/${page}`
+        })
+    )
+    .concat([new ExtractTextPlugin("style.css")])
 };
