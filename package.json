@@ -7,6 +7,7 @@
   "scripts": {
     "start": "webpack --mode production && node server.js",
     "build": "webpack --mode production",
+    "dev:server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development",
     "dev": "webpack --mode development",
     "dev:watch": "webpack --mode development -w",
     "server": "nodemon server.js"
@@ -31,6 +32,7 @@
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
   }
 }

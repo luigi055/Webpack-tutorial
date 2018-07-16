@@ -13,6 +13,15 @@ module.exports = {
     path: path.resolve(__dirname, "public"),
     filename: "bundle.js"
   },
+  devServer: {
+    contentBase: path.join(__dirname, "public"),
+    compress: true,
+    port: 3000,
+    clientLogLevel: "none",
+    historyApiFallback: true,
+    open: true,
+    openPage: "" // Avoid /undefined bug
+  },
   module: {
     rules: [
       {

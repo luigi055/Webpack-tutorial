@@ -702,7 +702,7 @@ here a basic template for src/index.js
 
 notice that the generated index.html in public already are liked to style.css and bundle.js. Neat!
 
-_WE DON'T NEED PUBLIC FOLDER ANYMORE, LET'S REMOVE IT_
+_WE DON'T NEED THE PUBLIC FOLDER ANYMORE, LET'S REMOVE IT_
 
 # v1.6.1 Plugins autodetect multiple html files (git checkout v1.6.1-plugins-autodetect-multiple-html)
 
@@ -743,3 +743,65 @@ since the plugins property understand array we're going to iterate htmlPages and
 ```
 
 and that's it. now we don't need to come back to config to add any new html file we need since it now have the abbility to do it by its own.
+
+# v1.7 Webpack dev server (git checkout v1.7-dev-server)
+
+another powerful feature developed by webpack was the webpack dev server which allows you to have a development server which auto compiles in watch mode and autorefresh all changes made.
+
+for this modulo we'll just need one package
+
+```
+yarn add --dev webpack-dev-server
+```
+
+in package.json let's add a new script:
+
+```
+  ...
+    "scripts": {
+      "dev:server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development"
+    }
+  ...
+```
+
+with this we're calling webpack-dev-server directly from node_modules. so this way we don't need to have it installed globally.
+
+now go to your CLI and...
+
+```
+yarn dev:server
+```
+
+and go to localhost:8080/
+
+of course webpack allows us to extend the basic configuration in webpack dev server
+
+now let's go to webpack.config.js in the config object let's add a new property.
+
+```
+...
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 3000,
+    clientLogLevel: "none",
+    historyApiFallback: true,
+    open: true,
+    openPage: "" // Avoid /undefined bug
+  }
+...
+```
+
+let's take a look at each of the option inside devServer
+
+contentBase: will be the folder which the page will be served.
+compress: (boolean) Enable gzip compression for everything served.
+clientLogLevel: (string) When using inline mode, the console in your DevTools will show you messages.
+historyApiFallback: When using the HTML5 History API, the index.html page will likely have to be served in place of any 404 responses.
+open: open automatically default browser
+openPage: Specify a page to navigate to when opening the browser.
+
+Now webpack dev server is installed and setted. It's time to run it as script.
+
+#Further Reading
+[Webpack Dev Server](https://webpack.js.org/configuration/dev-server/)
