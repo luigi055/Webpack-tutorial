@@ -805,3 +805,192 @@ Now webpack dev server is installed and setted. It's time to run it as script.
 
 #Further Reading
 [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/)
+
+# v1.8 Modes Enviroment (git checkout v1.8-modes-enviroments)
+
+Since webpack v4 a new feature was added for better customizing our webpack configuration in a way you could control in the same field which chunk of config should work for any enviroment.
+
+in this case we're going to control our webpack configuration in 2 cases.
+
+- production enviroment
+- development enviroment
+
+by default webpack set our enviroment in production mode (not in dev server which is development mode).
+
+there are 2 ways to add the enviroments in the config.
+
+the first one is directly in the config file like a new option.
+
+```
+module.exports = {
+  mode: 'production'
+};
+```
+
+and my favourite one directly passing the option by script execution like we already have setted in our scripts in package.json.
+
+```
+...
+  "scripts": {
+    "start": "webpack --mode production && node server.js",
+    "build": "webpack --mode production",
+    "dev:server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development",
+    "dev": "webpack --mode development",
+    "dev:watch": "webpack --mode development -w",
+    "server": "nodemon server.js"
+  },
+...
+```
+
+and why is this my favourite option?
+
+Simply because now we can get this mode in our config as parameter and made our configuration dinamically.
+
+for example we don't need dev server for development. so let's split this with a simple if statement.
+
+the first is now. we need to change a little bit our export object.
+
+to get the value of me mode we need to receive a parameter for this reason we need a function that will return the final config object. e.g.:
+
+webpack.config.js
+
+```
+module.exports = (env, argv) => {
+  const config = {
+    ...
+  };
+  if (argv.mode === "development") {
+    config.devServer = {
+      ...
+    }
+  }
+  return config;
+}
+```
+
+let's do a little refactor in the config object.
+
+```
+const fs = require("fs");
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+
+// Get All html files from /views
+const htmlPages = fs.readdirSync(path.join(__dirname, "src", "views"));
+
+module.exports = (env, argv) => {
+  const config = {
+    context: path.resolve(__dirname, "src"),
+    entry: "./app.js",
+    output: {
+      path: path.resolve(__dirname, "public"),
+      filename: "bundle.js"
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: "babel-loader"
+          }
+        },
+        {
+          test: /\.s?css$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: ExtractTextPlugin.extract({
+            fallback: "style-loader",
+            use: [
+              {
+                loader: "css-loader"
+              },
+              {
+                loader: "postcss-loader",
+                options: {
+                  sourceMap: true
+                }
+              },
+              {
+                loader: "resolve-url-loader",
+                options: {
+                  sourceMap: true
+                }
+              },
+              {
+                loader: "sass-loader",
+                options: {
+                  sourceMap: true
+                }
+              }
+            ]
+          })
+        },
+        {
+          test: /\.(jpe?g|png|gif)$/i,
+          loaders: [
+            "file-loader?limit=1024&name=assets/images/[name].[ext]",
+            {
+              loader: "image-webpack-loader",
+              options: {
+                mozjpeg: {
+                  progressive: true
+                },
+                gifsicle: {
+                  interlaced: false
+                },
+                optipng: {
+                  optimizationLevel: 4
+                },
+                pngquant: {
+                  quality: "65-90",
+                  speed: 4
+                }
+              }
+            }
+          ],
+          exclude: /node_modules/,
+          include: __dirname
+        },
+        {
+          test: /\.otf|woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          loader:
+            "url-loader?limit=10000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]"
+        },
+        {
+          test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          loader: "file-loader?limit=10000&name=assets/fonts/[name].[ext]"
+        },
+        {
+          test: /\.html$/,
+          loader: "html-loader"
+        }
+      ]
+    },
+    plugins: htmlPages
+      .map(
+        page =>
+          new HTMLWebpackPlugin({
+            title: "Home",
+            filename: `${page}`,
+            template: `views/${page}`
+          })
+      )
+      .concat([new ExtractTextPlugin("style.css")])
+  };
+
+  if (argv.mode === "development") {
+    config.devServer = {
+      contentBase: path.join(__dirname, "public"),
+      compress: true,
+      port: 3000,
+      clientLogLevel: "none",
+      historyApiFallback: true,
+      open: true,
+      openPage: "" // Avoid /undefined bug
+    };
+  }
+
+  return config;
+};
+```
